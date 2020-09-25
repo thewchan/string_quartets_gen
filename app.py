@@ -1,4 +1,60 @@
-"""Temporary one-page web app for string quartet generator."""
+"""Temporary one-page web app for string quartet generator.
+
+
+    Copyright (C) 2020  Matt Chan
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+    The program also utilize 3rd party modules, programs, and packages.
+    When required, their license disclaimer are displayed below.
+
+    Lilypond
+
+    LilyPond is Copyright (C) 1998--2020  Han-Wen Nienhuys
+    <hanwen@xs4all.nl> Jan Nieuwenhuizen <janneke@gnu.org> and
+    published under the GNU General Public License. GNU LilyPond is
+    free software: you can redistribute it and/or modify it under the
+    terms of the GNU General Public License as published by the Free
+    Software Foundation, either version 3 of the License, or (at your
+    option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    Magenta/Coconet
+
+    Copyright 2020 The Magenta Authors.
+    Magenta/Coconet is licensed under the Apache License, Version 2.0.
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+    http://www.apache.org/licenses/LICENSE-2.0
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+
+
+    Music21
+
+    Music21 is Copyright © 2006-2020 Michael Scott Cuthbert
+    and cuthbertLab" and is freely licensed under the BSD 3-Clause
+    License <https://spdx.org/licenses/BSD-3-Clause.html> (beginning
+    with music21 v.2.0) or (for all versions) the GNU Lesser General
+    Public License v3 or subsequent versions
+    <https://www.gnu.org/licenses/lgpl-3.0-standalone.html>.
+"""
 import os
 import subprocess
 
