@@ -25,15 +25,15 @@ def run_model(filename):
     subprocess.run([
         'python',
         './coconet_sample.py',
+        f'--prime_midi_melody_fpath={UPLOAD_FOLDER}{filename}',
         '--checkpoint=./coconet_checkpoint/coconet-64layers-128filters',
         '--gen_batch_size=1',
+        '--logtostderr',
         '--piece_length=32',
         '--temperature=0.99',
         '--strategy=harmonize_midi_melody',
         '--tfsample=false',
-        '--generation_output_dir=./samples/'
-        f'--prime_midi_melody_fpath={UPLOAD_FOLDER}{filename}',
-        '--logtostderr'
+        '--generation_output_dir=./samples/',
     ])
 
 
@@ -56,6 +56,7 @@ def index():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            # print(filename)
             run_model(filename)
 
             return redirect(url_for('uploaded_file', filename=filename))
