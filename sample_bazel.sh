@@ -36,7 +36,8 @@ tfsample=false
 prime_midi_melody_fpath=/home/thewchan/desktop/musescore-data/happy_birthday.mid
 
 # Run command.
-python /root/anaconda3/envs/magenta/lib/python3.8/site-packages/magenta/models/coconet/coconet_sample_new.py \
+# python /root/anaconda3/envs/magenta/lib/python3.8/site-packages/magenta/models/coconet/coconet_sample_new.py \
+python ./coconet_sample.py \
 --checkpoint="$checkpoint" \
 --gen_batch_size=$gen_batch_size \
 --piece_length=$piece_length \
