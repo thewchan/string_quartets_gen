@@ -25,7 +25,7 @@ set -e
 checkpoint=$1
 
 # Change this to path for saving samples.
-generation_output_dir=/home/thewchan/desktop/musescore-data/samples/
+generation_output_dir=/home/thewchan/desktop/string-quartets-gen/samples/
 
 # Generation parameters.
 # Number of samples to generate in a batch.
@@ -33,7 +33,7 @@ gen_batch_size=1
 piece_length=32
 strategy=harmonize_midi_melody
 tfsample=false
-prime_midi_melody_fpath=/home/thewchan/desktop/musescore-data/happy_birthday.mid
+prime_midi_melody_fpath=/home/thewchan/desktop/string-quartets-gen/happy_birthday.mid
 
 # Run command.
 # python /root/anaconda3/envs/magenta/lib/python3.8/site-packages/magenta/models/coconet/coconet_sample_new.py \

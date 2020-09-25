@@ -1,5 +1,6 @@
 """Temporary one-page web app for string quartet generator."""
 import os
+import subprocess
 
 from flask import (Flask, flash, redirect, render_template, request,
                    send_from_directory, url_for)
@@ -17,6 +18,23 @@ def allowed_file(filename):
     return ('.' in filename and
             filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
             )
+
+
+def run_model(filename):
+    """Take file and run through coconet."""
+    subprocess.run([
+        'python',
+        './coconet_sample.py',
+        '--checkpoint=./coconet_checkpoint/coconet-64layers-128filters',
+        '--gen_batch_size=1',
+        '--piece_length=32',
+        '--temperature=0.99',
+        '--strategy=harmonize_midi_melody',
+        '--tfsample=false',
+        '--generation_output_dir=./samples/'
+        f'--prime_midi_melody_fpath={UPLOAD_FOLDER}{filename}',
+        '--logtostderr'
+    ])
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -38,6 +56,7 @@ def index():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            run_model(filename)
 
             return redirect(url_for('uploaded_file', filename=filename))
 
