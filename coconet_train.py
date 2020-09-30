@@ -13,22 +13,16 @@
 # limitations under the License.
 
 """Train the model."""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
 import os
 import time
 
-from magenta.models.coconet import lib_data
-from magenta.models.coconet import lib_graph
-from magenta.models.coconet import lib_hparams
-from magenta.models.coconet import lib_util
 import numpy as np
 import six
-from six.moves import range
-from six.moves import zip
 import tensorflow.compat.v1 as tf
+from magenta.models.coconet import lib_data, lib_graph, lib_hparams, lib_util
+from six.moves import range, zip
 
 FLAGS = tf.app.flags.FLAGS
 flags = tf.app.flags
@@ -266,7 +260,7 @@ def main(unused_argv):
     with tf.Graph().as_default():
         no_op = tf.no_op()
 
-        # Build placeholders and training graph, and validation graph with reuse.
+        # Build placeholders & training graph, & validation graph with reuse.
         m = lib_graph.build_graph(is_training=True, hparams=hparams)
         tf.get_variable_scope().reuse_variables()
         mvalid = lib_graph.build_graph(is_training=False, hparams=hparams)
