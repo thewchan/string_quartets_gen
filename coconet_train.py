@@ -21,8 +21,10 @@ import time
 import numpy as np
 import six
 import tensorflow.compat.v1 as tf
-from magenta.models.coconet import lib_data, lib_graph, lib_hparams, lib_util
+from magenta.models.coconet import lib_graph, lib_hparams, lib_util
 from six.moves import range, zip
+
+import lib_data
 
 FLAGS = tf.app.flags.FLAGS
 flags = tf.app.flags
