@@ -143,7 +143,7 @@ def get_dataset(basepath, hparams, fold):
 
 
 class StringQuartet16thSeparated(Dataset):
-    key = "StringQuartet16thSeparated"
+    key = "stringquartet16thseparated"
     min_pitch = 0
     max_pitch = 127
     shortest_duration = 0.125

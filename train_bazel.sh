@@ -22,7 +22,7 @@ logdir=./logs
 # Change this to directory where data is loaded from:
 data_dir=./data/
 # Change this to your dataset class, which can be defined in lib_data.py.
-dataset=StringQuartet16thSeparated
+dataset=stringquartet16thseparated
 
 # Data preprocessing.
 crop_piece_len=64
