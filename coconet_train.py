@@ -18,15 +18,14 @@ from __future__ import absolute_import, division, print_function
 import os
 import time
 
+import lib_data
+import lib_graph
+import lib_hparams
 import numpy as np
 import six
 import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_util
 from six.moves import range, zip
-
-import lib_data
-import lib_graph
-import lib_hparams
 
 FLAGS = tf.app.flags.FLAGS
 flags = tf.app.flags
@@ -157,6 +156,7 @@ def run_epoch(supervisor, sess, m, dataset, hparams, eval_op, experiment_type,
               epoch_count):
     """Runs an epoch of training or evaluate the model on given data."""
     # reduce variance in validation loss by fixing the seed
+    print("!!!!!Running epoch!!!!!!")
     data_seed = 123 if experiment_type == 'valid' else None
     with lib_util.numpy_seed(data_seed):
         batches = (
