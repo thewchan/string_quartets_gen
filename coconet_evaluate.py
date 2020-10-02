@@ -27,6 +27,10 @@ import lib_data
 import lib_evaluation
 import lib_graph
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+
 FLAGS = tf.app.flags.FLAGS
 flags = tf.app.flags
 flags.DEFINE_string('data_dir', None,

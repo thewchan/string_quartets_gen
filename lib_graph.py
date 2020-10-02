@@ -22,7 +22,9 @@ import lib_hparams
 import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_tfutil
 
-# from tensorflow.keras.initializers import RandomNormal
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
 
 
 class CoconetGraph(object):
@@ -434,6 +436,6 @@ def load_checkpoint(path, instantiate_sess=True):
         wmodel.sess = tf.Session()
         saver = tf.train.Saver()
         tf.logging.info('loading checkpoint %s', path)
-        chkpt_path = os.path.join(path, 'model.ckpt')
+        chkpt_path = os.path.join(path, 'best_model.ckpt')
         saver.restore(wmodel.sess, chkpt_path)
     return wmodel

@@ -29,6 +29,10 @@ from magenta.models.coconet import (lib_logging, lib_mask,
 import lib_graph
 import lib_pianoroll
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+
 FLAGS = tf.app.flags.FLAGS
 flags = tf.app.flags
 flags.DEFINE_integer("gen_batch_size", 3,

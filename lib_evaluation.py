@@ -16,11 +16,14 @@
 """Helpers for evaluating the log likelihood of pianorolls under a model."""
 import time
 
-from magenta.models.coconet import lib_tfutil
-from magenta.models.coconet import lib_util
 import numpy as np
-from scipy.special import logsumexp
 import tensorflow.compat.v1 as tf
+from magenta.models.coconet import lib_tfutil, lib_util
+from scipy.special import logsumexp
+
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
 
 
 def evaluate(evaluator, pianorolls):
@@ -63,7 +66,8 @@ def evaluate(evaluator, pianorolls):
     _report(unit_losses, prefix="FINAL unit-level ")
 
     rval = dict(example_losses=example_losses, unit_losses=unit_losses)
-    rval.update(("example_%s" % k, v) for k, v in _stats(example_losses).items())
+    rval.update(("example_%s" % k, v)
+                for k, v in _stats(example_losses).items())
     rval.update(
         ("unit_%s" % k, v) for k, v in _stats(_flatcat(unit_losses)).items())
     return rval
@@ -109,10 +113,10 @@ class BaseEvaluator(lib_util.Factory):
         def predictor(pianorolls, masks):
             p = self.wmodel.sess.run(
                 self.wmodel.model.predictions,
-            feed_dict={
-                self.wmodel.model.pianorolls: pianorolls,
-                self.wmodel.model.masks: masks
-            })
+                feed_dict={
+                    self.wmodel.model.pianorolls: pianorolls,
+                    self.wmodel.model.masks: masks
+                })
             return p
 
         self.predictor = lib_tfutil.RobustPredictor(predictor)
@@ -162,16 +166,16 @@ class BaseEvaluator(lib_util.Factory):
 
 
 class FrameEvaluator(BaseEvaluator):
-      """Framewise evaluator.
+    """Framewise evaluator.
 
-      Evaluates pianorolls one frame at a time. That is, the model is judged for its
-      prediction of entire frames at a time, conditioning on its own samples rather
-      than the ground truth of other instruments/pitches in the same frame.
+    Evaluates pianorolls one frame at a time. That is, the model is judged for its
+    prediction of entire frames at a time, conditioning on its own samples rather
+    than the ground truth of other instruments/pitches in the same frame.
 
-      The frames are evaluated in random order, and within each frame the
-      instruments/pitches are evaluated in random order.
-      """
-      key = "frame"
+    The frames are evaluated in random order, and within each frame the
+    instruments/pitches are evaluated in random order.
+    """
+    key = "frame"
 
     def __call__(self, pianoroll):
         tt, pp, ii = pianoroll.shape
@@ -214,27 +218,27 @@ class FrameEvaluator(BaseEvaluator):
             assert len(t) == bb and len(d) == bb
 
             # Write in predictions and update mask.
-                if self.separate_instruments:
-                    xs_scratch[np.arange(bb), t, :, d] = np.eye(pp)[np.argmax(
-                        pxhats[np.arange(bb), t, :, d], axis=1)]
-                    mask[np.arange(bb), t, :, d] = 0
-                    # Every example in the batch sees one frame more than the previous.
-                    assert np.allclose(
-                        (1 - mask).sum(axis=(1, 2, 3)),
-                        [(k * dd + d_idx + 1) * pp for k in range(mask.shape[0])])
-                else:
-                    xs_scratch[np.arange(bb), t, d, :] = (
-                        pxhats[np.arange(bb), t, d, :] > 0.5)
-                    mask[np.arange(bb), t, d, :] = 0
-                    # Every example in the batch sees one frame more than the previous.
-                    assert np.allclose(
-                        (1 - mask).sum(axis=(1, 2, 3)),
-                        [(k * dd + d_idx + 1) * ii for k in range(mask.shape[0])])
+            if self.separate_instruments:
+                xs_scratch[np.arange(bb), t, :, d] = np.eye(pp)[np.argmax(
+                    pxhats[np.arange(bb), t, :, d], axis=1)]
+                mask[np.arange(bb), t, :, d] = 0
+                # Every example in the batch sees one frame more than the previous.
+                assert np.allclose(
+                    (1 - mask).sum(axis=(1, 2, 3)),
+                    [(k * dd + d_idx + 1) * pp for k in range(mask.shape[0])])
+            else:
+                xs_scratch[np.arange(bb), t, d, :] = (
+                    pxhats[np.arange(bb), t, d, :] > 0.5)
+                mask[np.arange(bb), t, d, :] = 0
+                # Every example in the batch sees one frame more than the previous.
+                assert np.allclose(
+                    (1 - mask).sum(axis=(1, 2, 3)),
+                    [(k * dd + d_idx + 1) * ii for k in range(mask.shape[0])])
 
-                self._update_lls(lls, xs, pxhats, t, d)
+            self._update_lls(lls, xs, pxhats, t, d)
 
-            # conjunction over notes within frames; frame is the unit of prediction
-            return lls.sum(axis=1)
+        # conjunction over notes within frames; frame is the unit of prediction
+        return lls.sum(axis=1)
 
     def draw_ordering(self, tt, dd):
         o = np.arange(tt, dtype=np.int32)

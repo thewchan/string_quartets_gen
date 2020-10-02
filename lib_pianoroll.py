@@ -18,6 +18,10 @@ import numpy as np
 import pretty_midi
 import tensorflow.compat.v1 as tf
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+
 
 class PitchOutOfEncodeRangeError(Exception):
     """Exception for when pitch of note is out of encodings range."""
@@ -45,8 +49,10 @@ class PianorollEncoderDecoder(object):
 
     def __init__(self,
                  shortest_duration=0.125,
-                 min_pitch=0,
-                 max_pitch=127,
+                 # min_pitch=0,
+                 # max_pitch=127,
+                 min_pitch=36,
+                 max_pitch=81,
                  separate_instruments=True,
                  num_instruments=4,
                  quantization_level=None):

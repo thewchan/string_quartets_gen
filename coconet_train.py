@@ -27,6 +27,10 @@ import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_util
 from six.moves import range, zip
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+
 FLAGS = tf.app.flags.FLAGS
 flags = tf.app.flags
 flags.DEFINE_string('data_dir', None,

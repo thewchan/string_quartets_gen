@@ -21,6 +21,10 @@ import numpy as np
 import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_mask, lib_util
 
+config = tf.ConfigProto()
+config.gpu_options.allow_growth = True
+sess = tf.Session(config=config)
+
 
 class Dataset(lib_util.Factory):
     """Class for retrieving different datasets."""
