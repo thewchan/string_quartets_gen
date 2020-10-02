@@ -25,7 +25,7 @@ set -e
 checkpoint=$1
 
 # Change this to where data is loaded from.
-data_dir="testdata"
+data_dir="data"
 
 # Change this to where evaluation results are stored.
 eval_logdir="eval_logdir"

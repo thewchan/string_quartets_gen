@@ -18,10 +18,10 @@ from __future__ import absolute_import, division, print_function
 import collections
 import os
 
+import lib_hparams
 import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_tfutil
 
-import lib_hparams
 # from tensorflow.keras.initializers import RandomNormal
 
 
@@ -434,6 +434,6 @@ def load_checkpoint(path, instantiate_sess=True):
         wmodel.sess = tf.Session()
         saver = tf.train.Saver()
         tf.logging.info('loading checkpoint %s', path)
-        chkpt_path = os.path.join(path, 'best_model.ckpt')
+        chkpt_path = os.path.join(path, 'model.ckpt')
         saver.restore(wmodel.sess, chkpt_path)
     return wmodel

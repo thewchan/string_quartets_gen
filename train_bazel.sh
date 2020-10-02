@@ -25,14 +25,14 @@ data_dir=./data/
 dataset=StringQuartet16thSeparated
 
 # Data preprocessing.
-crop_piece_len=32
+crop_piece_len=64
 separate_instruments=True
 quantization_level=0.125  # 16th notes
 
 # Hyperparameters.
 maskout_method=orderless
-num_layers=32
-num_filters=64
+num_layers=64
+num_filters=128
 batch_size=10
 use_sep_conv=True
 architecture='dilated'

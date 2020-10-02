@@ -112,7 +112,7 @@ class Dataset(lib_util.Factory):
 
         for sequence in sequences:
             ######
-            print(f'\n\n\nsequence: {sequence}\n\n\n')
+            # print(f'\n\n\nsequence: {sequence}\n\n\n')
             #####
             pianoroll = self.encoder.encode(sequence)
             pianoroll = lib_util.random_crop(
