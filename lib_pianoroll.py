@@ -49,10 +49,10 @@ class PianorollEncoderDecoder(object):
 
     def __init__(self,
                  shortest_duration=0.125,
-                 # min_pitch=0,
-                 # max_pitch=127,
-                 min_pitch=36,
-                 max_pitch=81,
+                 min_pitch=0,
+                 max_pitch=127,
+                 # min_pitch=36,
+                 # max_pitch=81,
                  separate_instruments=True,
                  num_instruments=4,
                  quantization_level=None):

@@ -13,18 +13,16 @@
 # limitations under the License.
 
 """Classes for defining hypermaters and model architectures."""
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
+from __future__ import absolute_import, division, print_function
 
 import itertools as it
 import os
 
-from magenta.models.coconet import lib_util
 import numpy as np
 import six
 import tensorflow.compat.v1 as tf
 import yaml
+from magenta.models.coconet import lib_util
 
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
@@ -55,10 +53,10 @@ class Hyperparameters(object):
       corrupt_ratio=0.25,
       # Input dimensions.
       batch_size=20,
-      # min_pitch=0,
-      # max_pitch=127,
-      min_pitch=36,
-      max_pitch=81,
+      min_pitch=0,
+      max_pitch=127,
+      # min_pitch=36,
+      # max_pitch=81,
       crop_piece_len=64,
       num_instruments=4,
       separate_instruments=True,
