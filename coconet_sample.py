@@ -23,9 +23,10 @@ import time
 import numpy as np
 import pretty_midi
 import tensorflow.compat.v1 as tf
-from magenta.models.coconet import (lib_graph, lib_logging, lib_mask,
+from magenta.models.coconet import (lib_logging, lib_mask,
                                     lib_sampling, lib_tfsampling, lib_util)
 
+import lib_graph
 import lib_pianoroll
 
 FLAGS = tf.app.flags.FLAGS

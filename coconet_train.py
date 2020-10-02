@@ -21,10 +21,12 @@ import time
 import numpy as np
 import six
 import tensorflow.compat.v1 as tf
-from magenta.models.coconet import lib_graph, lib_hparams, lib_util
+from magenta.models.coconet import lib_util
 from six.moves import range, zip
 
 import lib_data
+import lib_graph
+import lib_hparams
 
 FLAGS = tf.app.flags.FLAGS
 flags = tf.app.flags
@@ -292,19 +294,19 @@ def main(unused_argv):
                 run_epoch(sv, sess, m, train_data, hparams, m.train_op,
                           'train', epoch_count)
 
-        # Run validation.
-        if epoch_count % hparams.eval_freq == 0:
-            estimate_popstats(sv, sess, m, train_data, hparams)
-            loss = run_epoch(sv, sess, mvalid, valid_data, hparams, no_op,
-                             'valid', epoch_count)
-            tracker(loss, sess)
-            if tracker.should_stop():
-                break
+                # Run validation.
+                if epoch_count % hparams.eval_freq == 0:
+                    estimate_popstats(sv, sess, m, train_data, hparams)
+                    loss = run_epoch(sv, sess, mvalid, valid_data, hparams, no_op,
+                                     'valid', epoch_count)
+                    tracker(loss, sess)
+                    if tracker.should_stop():
+                        break
 
-        epoch_count += 1
+                epoch_count += 1
 
-    print('best', tracker.label, tracker.best)
-    print('Done.')
+        print('best', tracker.label, tracker.best)
+        print('Done.')
     return tracker.best
 
 

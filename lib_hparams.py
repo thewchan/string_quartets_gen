@@ -51,8 +51,8 @@ class Hyperparameters(object):
       corrupt_ratio=0.25,
       # Input dimensions.
       batch_size=20,
-      min_pitch=36,
-      max_pitch=81,
+      min_pitch=0,
+      max_pitch=127,
       crop_piece_len=64,
       num_instruments=4,
       separate_instruments=True,
@@ -146,7 +146,7 @@ class Hyperparameters(object):
     max_pitch = dikt.get('max_pitch', self.max_pitch)
     if 'pitch_ranges' in legacy_hparams:
       for legacy_pitch, given_pitch in zip(
-          legacy_hparams['pitch_ranges'], [min_pitch, max_pitch]):
+              legacy_hparams['pitch_ranges'], [min_pitch, max_pitch]):
         if legacy_pitch != given_pitch:
           raise ValueError(
               'Legacy pitch range element %d does not match given '
@@ -263,7 +263,7 @@ class Straight(Architecture):
                     self.key, input_depth, output_depth)
     assert num_layers >= 4
     if ('num_pointwise_splits' in kwargs and
-        kwargs['num_pointwise_splits'] > 1):
+            kwargs['num_pointwise_splits'] > 1):
       raise ValueError(
           'Splitting pointwise for non-dilated architectures not yet supported.'
           'Set num_pointwise_splits to 1.')

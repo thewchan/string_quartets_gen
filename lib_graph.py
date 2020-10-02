@@ -19,7 +19,10 @@ import collections
 import os
 
 import tensorflow.compat.v1 as tf
-from magenta.models.coconet import lib_hparams, lib_tfutil
+from magenta.models.coconet import lib_tfutil
+
+import lib_hparams
+# from tensorflow.keras.initializers import RandomNormal
 
 
 class CoconetGraph(object):
@@ -88,10 +91,9 @@ class CoconetGraph(object):
         layers = self.hparams.get_conv_arch().layers
         n = len(layers)
         for i, layer in enumerate(layers):
-             with tf.variable_scope('conv%d' % i):
+            with tf.variable_scope('conv%d' % i):
                 self.residual_counter += 1
                 self.residual_save(featuremaps)
-
                 featuremaps = self.apply_convolution(featuremaps, layer, i)
                 featuremaps = self.apply_residual(
                     featuremaps, is_first=i == 0, is_last=i == n - 1)
@@ -115,6 +117,7 @@ class CoconetGraph(object):
         """Returns concatenates masked out pianorolls with their masks."""
         # pianorolls, masks = self.inputs['pianorolls'], self.inputs[
         #     'masks']
+        # !!!!!!!!!!!!!!! CHECK TO SEE WHAT IS IN PIANOROLLS AND MASKS!!!!!
         pianorolls, masks = self.pianorolls, self.masks
         pianorolls *= 1. - masks
         if self.hparams.mask_indicates_context:
@@ -124,6 +127,7 @@ class CoconetGraph(object):
             # padded area will have zero mask, indicating no information
             # to rely on.
             masks = 1. - masks
+
         return tf.concat([pianorolls, masks], axis=3)
 
     def setup_optimizer(self):
@@ -142,7 +146,8 @@ class CoconetGraph(object):
 
         # FIXME 0.5 -> hparams.decay_rate
         self.decay_op = tf.assign(self.learning_rate, 0.5 * self.learning_rate)
-        self.optimizer = tf.train.AdamOptimizer(learning_rate=self.learning_rate)
+        self.optimizer = tf.train.AdamOptimizer(
+            learning_rate=self.learning_rate)
         self.train_op = self.optimizer.minimize(self.loss)
 
     def compute_predictions(self, logits):
@@ -209,7 +214,7 @@ class CoconetGraph(object):
                 tf.reduce_sum(mask * unreduced_loss) / self.reduced_mask_size)
             self.loss_unmask = (
                 tf.reduce_sum(
-                        unmask * unreduced_loss) / self.reduced_unmask_size)
+                    unmask * unreduced_loss) / self.reduced_unmask_size)
 
         # Check which loss to use as objective function.
         self.loss = (
@@ -256,10 +261,11 @@ class CoconetGraph(object):
 
         filter_shape = layer['filters']
         # Instantiate or retrieve filter weights.
-        fanin = tf.to_float(tf.reduce_prod(filter_shape[:-1]))
-        stddev = tf.sqrt(tf.div(2.0, fanin))
+        fanin = tf.cast(tf.reduce_prod(filter_shape[:-1]), tf.float32)
+        stddev = tf.sqrt(tf.divide(2.0, fanin))
         initializer = tf.random_normal_initializer(
             0.0, stddev)
+        # initializer = RandomNormal(0.0, stddev)
         regular_convs = (not self.hparams.use_sep_conv or
                          layer_idx < (self.hparams
                                           .num_initial_regular_conv_layers))
@@ -283,36 +289,41 @@ class CoconetGraph(object):
             num_splits = layer.get('num_pointwise_splits', 1)
             tf.logging.info('num_splits %d', num_splits)
             if num_splits > 1:
-                num_outputs = None
+                # num_outputs = None
+                num_outputs = 0
+            ######################
+            # print(f'\n\n\nnum_splits {num_splits}\n\n\n')
+            #########################
             conv = tf.layers.separable_conv2d(
                 x,
                 num_outputs,
                 filter_shape[:2],
                 depth_multiplier=self.hparams.sep_conv_depth_multiplier,
-                stride=layer.get('conv_stride', 1),
+                strides=layer.get('conv_stride', 1),
                 padding=layer.get('conv_pad', 'SAME'),
-                rate=layer.get('dilation_rate', 1),
-                activation_fn=None,
-                weights_initializer=initializer if self.is_training else None)
+                dilation_rate=layer.get('dilation_rate', 1),
+                activation=None,
+                bias_initializer=initializer if self.is_training else None)
+
             if num_splits > 1:
                 splits = tf.split(conv, num_splits, -1)
                 print(len(splits), splits[0].shape)
                 # TODO(annahuang): support non equal splits.
                 pointwise_splits = [
-                    tf.layers.dense(splits[i], filter_shape[3]/num_splits,
+                    tf.layers.dense(splits[i], filter_shape[3] / num_splits,
                                     name='split_%d_%d' % (layer_idx, i))
                     for i in range(num_splits)]
                 conv = tf.concat((pointwise_splits), axis=-1)
 
             # Compute batch normalization or add biases.
-            if self.hparams.batch_norm:
-                 y = self.apply_batchnorm(conv)
-            else:
-                biases = tf.get_variable(
-                    'bias', [conv.get_shape()[-1]],
-                    initializer=tf.constant_initializer(0.0))
-                y = tf.nn.bias_add(conv, biases)
-            return y
+        if self.hparams.batch_norm:
+            y = self.apply_batchnorm(conv)
+        else:
+            biases = tf.get_variable(
+                'bias', [conv.get_shape()[-1]],
+                initializer=tf.constant_initializer(0.0))
+            y = tf.nn.bias_add(conv, biases)
+        return y
 
     def apply_batchnorm(self, x):
         """Normalizes batch w/ moving population stats for training,
@@ -359,8 +370,8 @@ class CoconetGraph(object):
             mean, variance = popmean, popvariance
 
         return tf.nn.batch_normalization(
-                                x, mean, variance, betas, gammas,
-                                self.hparams.batch_norm_variance_epsilon)
+            x, mean, variance, betas, gammas,
+            self.hparams.batch_norm_variance_epsilon)
 
     def apply_activation(self, x, layer):
         activation_func = layer.get('activation', tf.nn.relu)
@@ -376,9 +387,11 @@ class CoconetGraph(object):
             strides=[1, pooling[0], pooling[1], 1],
             padding=layer['pool_pad'])
 
+# Try using non None values and using hparams.batch_size and 64.
+
 
 def get_placeholders(hparams):
-    return dict(
+    placeholder = dict(
         pianorolls=tf.placeholder(
             tf.float32,
             [None, None, hparams.num_pitches, hparams.num_instruments]),
@@ -386,6 +399,7 @@ def get_placeholders(hparams):
             tf.float32,
             [None, None, hparams.num_pitches, hparams.num_instruments]),
         lengths=tf.placeholder(tf.float32, [None]))
+    return placeholder
 
 
 def build_graph(is_training,

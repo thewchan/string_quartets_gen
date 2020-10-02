@@ -18,11 +18,11 @@ set -x
 set -e
 
 # Change this to directory where you want to save experiment logs:
-logdir=$HOME/logs
+logdir=./logs
 # Change this to directory where data is loaded from:
-data_dir=$HOME/data/
+data_dir=./data/
 # Change this to your dataset class, which can be defined in lib_data.py.
-dataset=Jsb16thSeparated
+dataset=StringQuartet16thSeparated
 
 # Data preprocessing.
 crop_piece_len=32

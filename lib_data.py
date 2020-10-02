@@ -16,11 +16,10 @@
 """Classes for datasets and batches."""
 import os
 
+import lib_pianoroll
 import numpy as np
 import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_mask, lib_util
-
-import lib_pianoroll
 
 
 class Dataset(lib_util.Factory):
@@ -57,6 +56,7 @@ class Dataset(lib_util.Factory):
         print("Loading data from", data_path)
         with tf.gfile.Open(data_path, "rb") as p:
             self.data = np.load(p, allow_pickle=True, encoding="latin1")[fold]
+        # self.data = self.data[1:]
 
     @property
     def name(self):
@@ -111,6 +111,9 @@ class Dataset(lib_util.Factory):
         masks = []
 
         for sequence in sequences:
+            ######
+            print(f'\n\n\nsequence: {sequence}\n\n\n')
+            #####
             pianoroll = self.encoder.encode(sequence)
             pianoroll = lib_util.random_crop(
                 pianoroll, self.hparams.crop_piece_len)
@@ -150,8 +153,8 @@ class StringQuartet16thSeparated(Dataset):
 
 class Jsb16thSeparated(Dataset):
     key = "Jsb16thSeparated"
-    min_pitch = 36
-    max_pitch = 81
+    min_pitch = 0
+    max_pitch = 127
     shortest_duration = 0.125
     num_instruments = 4
     qpm = 60
