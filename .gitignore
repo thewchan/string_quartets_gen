@@ -1,10 +1,9 @@
 .ipynb_checkpoints
+__pycache__
 mxl
 samples
 *.mid
 *.midi
 JSB-Chorales-dataset-master
 quartets_meta.csv
-coconet_checkpoint
 *.pyc
-
