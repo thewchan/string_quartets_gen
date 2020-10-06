@@ -41,12 +41,14 @@ dilate_time_only=False
 repeat_last_dilation_level=False
 num_pointwise_splits=2
 interleave_split_every_n_layers=2
-num_epochs=20
+num_epochs=30
+learning_rate=0.125
 
 
 # Run command.
 python coconet_train.py \
-  --num_epochs=30 \
+  --learning_rate=$learning_rate \
+  --num_epochs=$num_epochs \
   --logdir=$logdir \
   --log_process=True \
   --data_dir=$data_dir \
