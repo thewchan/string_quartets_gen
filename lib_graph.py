@@ -22,6 +22,11 @@ import lib_hparams
 import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_tfutil
 
+
+import tensorflow.keras.initializers.GlorotUniform as glorot_uniform
+
+
+
 config = tf.ConfigProto()
 config.gpu_options.allow_growth = True
 sess = tf.Session(config=config)
@@ -256,7 +261,7 @@ class CoconetGraph(object):
                 x += self.output_for_residual
         return x
 
-import tensorflow.keras.initializers.GlorotUniform as glorot_uniform
+
     def apply_convolution(self, x, layer, layer_idx):
         """Adds convolution and batch norm layers if hparam.batch_norm is True."""
         if 'filters' not in layer:
