@@ -23,7 +23,7 @@ import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_tfutil
 
 
-import tensorflow.keras.initializers.GlorotUniform as glorot_uniform
+from tensorflow.keras.initializers import GlorotUniform as glorot_uniform
 
 
 
