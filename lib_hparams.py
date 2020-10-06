@@ -94,7 +94,7 @@ class Hyperparameters(object):
       rescale_loss=True,
       # Training.
       # learning_rate=2**-6,
-      learning_rate=2**-3,  # for sigmoids.
+      learning_rate=2**-4,  # for sigmoids.
       mask_indicates_context=False,
       eval_freq=1,
       num_epochs=0,

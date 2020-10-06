@@ -256,6 +256,7 @@ class CoconetGraph(object):
                 x += self.output_for_residual
         return x
 
+import tensorflow.keras.initializers.GlorotUniform as glorot_uniform
     def apply_convolution(self, x, layer, layer_idx):
         """Adds convolution and batch norm layers if hparam.batch_norm is True."""
         if 'filters' not in layer:
@@ -265,8 +266,9 @@ class CoconetGraph(object):
         # Instantiate or retrieve filter weights.
         fanin = tf.cast(tf.reduce_prod(filter_shape[:-1]), tf.float32)
         stddev = tf.sqrt(tf.divide(2.0, fanin))
-        initializer = tf.random_normal_initializer(
-            0.0, stddev)
+        # initializer = tf.random_normal_initializer(
+        #     0.0, stddev)
+        initializer = glorot_uniform()
         # initializer = RandomNormal(0.0, stddev)
         regular_convs = (not self.hparams.use_sep_conv or
                          layer_idx < (self.hparams
