@@ -41,7 +41,7 @@ dilate_time_only=False
 repeat_last_dilation_level=False
 num_pointwise_splits=2
 interleave_split_every_n_layers=2
-num_epochs=30
+num_epochs=20
 
 
 # Run command.
