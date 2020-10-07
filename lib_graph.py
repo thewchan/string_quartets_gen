@@ -23,8 +23,7 @@ import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_tfutil
 
 
-from tensorflow.keras.initializers import GlorotUniform as glorot_uniform
-
+from tensorflow.keras.initializers import LecunUniform
 
 
 config = tf.ConfigProto()
@@ -261,7 +260,6 @@ class CoconetGraph(object):
                 x += self.output_for_residual
         return x
 
-
     def apply_convolution(self, x, layer, layer_idx):
         """Adds convolution and batch norm layers if hparam.batch_norm is True."""
         if 'filters' not in layer:
@@ -273,7 +271,7 @@ class CoconetGraph(object):
         stddev = tf.sqrt(tf.divide(2.0, fanin))
         # initializer = tf.random_normal_initializer(
         #     0.0, stddev)
-        initializer = glorot_uniform()
+        initializer = LecunUniform()
         # initializer = RandomNormal(0.0, stddev)
         regular_convs = (not self.hparams.use_sep_conv or
                          layer_idx < (self.hparams
