@@ -42,7 +42,7 @@ repeat_last_dilation_level=False
 num_pointwise_splits=2
 interleave_split_every_n_layers=2
 num_epochs=30
-learning_rate=0.125
+learning_rate=0.03125
 
 
 # Run command.
