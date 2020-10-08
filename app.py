@@ -67,6 +67,7 @@ ALLOWED_EXTENSIONS = {'mid', 'midi'}
 UPLOAD_FOLDER = './samples/result/'
 
 app = Flask(__name__)
+app.secret_key = 'temporary key'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -111,7 +112,7 @@ def index():
     """Temporary home page for string quartet web-app."""
     if request.method == 'POST':
         if 'file' not in request.files:
-            flash('No file part')
+            flash('No selected file')
 
             return redirect(request.url)
 
@@ -141,4 +142,5 @@ def uploaded_file(filename):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", debug=True)
+    # app.run(host="0.0.0.0", debug=True)
+    app.run(debug=True)

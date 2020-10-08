@@ -45,11 +45,11 @@
                 <img src="{{ url_for('static', filename='midi-icon.svg') }}" alt="midi file icon" class="file-icon">
               </div>
             </div>
-            <form class="pure-form " method="post" enctype="multipart/form-data">
+            <form class="pure-form " method="post" enctype="multipart/form-data" novalidate>
               <label for="file-upload" class="pure-input-rounded">
-                Select midi file
+                <span id="file-upload-filename">Upload Midi File</span>
               </label>
-              <input id="file-upload" type="file" name="file">
+              <input id="file-upload" type="file" name="file" required="required">
               <input class="pure-button pure-button-primary" type="submit" value="Upload">
             </form>
           </div>
@@ -73,5 +73,6 @@
         &copy; Copyright 2020, <a href="https://github.com/thewchan" style="colo:gray">Matt Chan</a>. The design of this site is licensed under the <a href="https://creativecommons.org/licenses/by-sa/4.0/" style="color:gray">Creative Commons Attribution Share Alike 4.0 International</a> license.
       </p>
     </div>
+    <script type="text/javascript" src="{{ url_for('static', filename='scripts.js') }}"></script>
 </body>
 </html>
