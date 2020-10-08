@@ -23,7 +23,7 @@ import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_tfutil
 
 
-from tensorflow.keras.initializers import GorotUniform
+from tensorflow.keras.initializers import GlorotUniform
 
 
 config = tf.ConfigProto()
@@ -271,7 +271,7 @@ class CoconetGraph(object):
         stddev = tf.sqrt(tf.divide(2.0, fanin))
         # initializer = tf.random_normal_initializer(
         #     0.0, stddev)
-        initializer = GorotUniform()
+        initializer = GlorotUniform()
         # initializer = RandomNormal(0.0, stddev)
         regular_convs = (not self.hparams.use_sep_conv or
                          layer_idx < (self.hparams
