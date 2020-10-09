@@ -22,7 +22,7 @@ import lib_hparams
 import tensorflow.compat.v1 as tf
 from magenta.models.coconet import lib_tfutil
 
-from tensorflow.keras.initializers import LecunNormal
+from tensorflow.keras.initializers import GlorotNormal
 
 
 config = tf.ConfigProto()
@@ -270,7 +270,7 @@ class CoconetGraph(object):
         stddev = tf.sqrt(tf.divide(2.0, fanin))
         # initializer = tf.random_normal_initializer(
         #     0.0, stddev)
-        initializer = LecunNormal()
+        initializer = GlorotNormal()
         # initializer = RandomNormal(0.0, stddev)
         regular_convs = (not self.hparams.use_sep_conv or
                          layer_idx < (self.hparams
