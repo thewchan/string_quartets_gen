@@ -1,0 +1,678 @@
++ set -e
++ logdir=./logs
++ data_dir=./data/
++ dataset=stringquartet16thseparated
++ crop_piece_len=64
++ separate_instruments=True
++ quantization_level=0.125
++ maskout_method=orderless
++ num_layers=64
++ num_filters=128
++ batch_size=10
++ use_sep_conv=True
++ architecture=dilated
++ num_dilation_blocks=1
++ dilate_time_only=False
++ repeat_last_dilation_level=False
++ num_pointwise_splits=2
++ interleave_split_every_n_layers=2
++ num_epochs=30
++ learning_rate=0.015625
++ python coconet_train.py --learning_rate=0.015625 --num_epochs=30 --logdir=./logs --log_process=True --data_dir=./data/ --dataset=stringquartet16thseparated --crop_piece_len=64 --separate_instruments=True --quantization_level=0.125 --maskout_method=orderless --num_layers=64 --num_filters=128 --use_residual --batch_size=10 --use_sep_conv=True --architecture=dilated --num_dilation_blocks=1 --dilate_time_only=False --repeat_last_dilation_level=False --num_pointwise_splits=2 --interleave_split_every_n_layers=2 --logtostderr
+2020-10-09 01:03:07.035010: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcudart.so.10.1
+2020-10-09 01:03:08.776810: I tensorflow/core/platform/profile_utils/cpu_utils.cc:104] CPU Frequency: 2200000000 Hz
+2020-10-09 01:03:08.777087: I tensorflow/compiler/xla/service/service.cc:168] XLA service 0x1f72a00 initialized for platform Host (this does not guarantee that XLA will be used). Devices:
+2020-10-09 01:03:08.777127: I tensorflow/compiler/xla/service/service.cc:176]   StreamExecutor device (0): Host, Default Version
+2020-10-09 01:03:08.845969: I tensorflow/stream_executor/platform/default/dso_loader.cc:48] Successfully opened dynamic library libcuda.so.1
+2020-10-09 01:03:08.903460: E tensorflow/stream_executor/cuda/cuda_driver.cc:314] failed call to cuInit: CUDA_ERROR_NO_DEVICE: no CUDA-capable device is detected
+2020-10-09 01:03:08.903520: I tensorflow/stream_executor/cuda/cuda_diagnostics.cc:156] kernel driver does not appear to be running on this host (b36f58dee552): /proc/driver/nvidia/version does not exist
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/compat/v2_compat.py:96: disable_resource_variables (from tensorflow.python.ops.variable_scope) is deprecated and will be removed in a future version.
+Instructions for updating:
+non-resource variables are not supported in the long term
+TensorFlow version: 2.3.0
+orderless separate True
+INFO:tensorflow:Instantiating hparams...
+I1009 01:03:13.738304 140320323577728 lib_hparams.py:125] Instantiating hparams...
+dataset: stringquartet16thseparated ./data/
+current dir: .
+Loading data from /content/gdrive/My Drive/insight_project/string_quartets_gen/./data/stringquartet16thseparated.npz
+Loading data from /content/gdrive/My Drive/insight_project/string_quartets_gen/./data/stringquartet16thseparated.npz
+# of train_data: 2208
+# of valid_data: 737
+INFO:tensorflow:model_type=dilated, input_depth=8, output_depth=4
+I1009 01:03:15.322659 140320323577728 lib_hparams.py:302] model_type=dilated, input_depth=8, output_depth=4
+INFO:tensorflow:layer_dilation_rates [1, 1]
+I1009 01:03:15.322984 140320323577728 lib_hparams.py:347] layer_dilation_rates [1, 1]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.323895 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [2, 2]
+I1009 01:03:15.324429 140320323577728 lib_hparams.py:347] layer_dilation_rates [2, 2]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.324523 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [4, 4]
+I1009 01:03:15.324610 140320323577728 lib_hparams.py:347] layer_dilation_rates [4, 4]
+INFO:tensorflow:num_split 2
+I1009 01:03:15.324706 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:layer_dilation_rates [8, 8]
+I1009 01:03:15.324786 140320323577728 lib_hparams.py:347] layer_dilation_rates [8, 8]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.324862 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [16, 16]
+I1009 01:03:15.324938 140320323577728 lib_hparams.py:347] layer_dilation_rates [16, 16]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.325014 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [32, 32]
+I1009 01:03:15.325093 140320323577728 lib_hparams.py:347] layer_dilation_rates [32, 32]
+INFO:tensorflow:num_split 2
+I1009 01:03:15.325168 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:num_layers=9, num_filters=128
+I1009 01:03:15.325244 140320323577728 lib_hparams.py:361] num_layers=9, num_filters=128
+INFO:tensorflow:Writing to ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/config
+I1009 01:03:15.327620 140320323577728 coconet_train.py:263] Writing to ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/config
+INFO:tensorflow:model_type=dilated, input_depth=8, output_depth=4
+I1009 01:03:15.353363 140320323577728 lib_hparams.py:302] model_type=dilated, input_depth=8, output_depth=4
+INFO:tensorflow:layer_dilation_rates [1, 1]
+I1009 01:03:15.353626 140320323577728 lib_hparams.py:347] layer_dilation_rates [1, 1]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.353759 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [2, 2]
+I1009 01:03:15.353853 140320323577728 lib_hparams.py:347] layer_dilation_rates [2, 2]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.353942 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [4, 4]
+I1009 01:03:15.354028 140320323577728 lib_hparams.py:347] layer_dilation_rates [4, 4]
+INFO:tensorflow:num_split 2
+I1009 01:03:15.354113 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:layer_dilation_rates [8, 8]
+I1009 01:03:15.354198 140320323577728 lib_hparams.py:347] layer_dilation_rates [8, 8]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.354274 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [16, 16]
+I1009 01:03:15.354357 140320323577728 lib_hparams.py:347] layer_dilation_rates [16, 16]
+INFO:tensorflow:num_split 1
+I1009 01:03:15.354432 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [32, 32]
+I1009 01:03:15.354506 140320323577728 lib_hparams.py:347] layer_dilation_rates [32, 32]
+INFO:tensorflow:num_split 2
+I1009 01:03:15.354583 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:num_layers=9, num_filters=128
+I1009 01:03:15.354660 140320323577728 lib_hparams.py:361] num_layers=9, num_filters=128
+INFO:tensorflow:num_splits 1
+I1009 01:03:15.430569 140320323577728 lib_graph.py:296] num_splits 1
+WARNING:tensorflow:From /content/gdrive/My Drive/insight_project/string_quartets_gen/lib_graph.py:312: separable_conv2d (from tensorflow.python.keras.legacy_tf_layers.convolutional) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.keras.layers.SeparableConv2D` instead.
+W1009 01:03:15.430874 140320323577728 deprecation.py:323] From /content/gdrive/My Drive/insight_project/string_quartets_gen/lib_graph.py:312: separable_conv2d (from tensorflow.python.keras.legacy_tf_layers.convolutional) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.keras.layers.SeparableConv2D` instead.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/keras/legacy_tf_layers/convolutional.py:1096: Layer.apply (from tensorflow.python.keras.engine.base_layer_v1) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `layer.__call__` method instead.
+W1009 01:03:15.438302 140320323577728 deprecation.py:323] From /usr/local/lib/python3.6/dist-packages/tensorflow/python/keras/legacy_tf_layers/convolutional.py:1096: Layer.apply (from tensorflow.python.keras.engine.base_layer_v1) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please use `layer.__call__` method instead.
+INFO:tensorflow:num_splits 2
+I1009 01:03:15.533127 140320323577728 lib_graph.py:296] num_splits 2
+2 (?, ?, ?, 0)
+WARNING:tensorflow:From /content/gdrive/My Drive/insight_project/string_quartets_gen/lib_graph.py:321: dense (from tensorflow.python.keras.legacy_tf_layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.Dense instead.
+W1009 01:03:15.590483 140320323577728 deprecation.py:323] From /content/gdrive/My Drive/insight_project/string_quartets_gen/lib_graph.py:321: dense (from tensorflow.python.keras.legacy_tf_layers.core) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use keras.layers.Dense instead.
+INFO:tensorflow:num_splits 1
+I1009 01:03:15.676766 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:num_splits 1
+I1009 01:03:15.756510 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:num_splits 2
+I1009 01:03:15.836426 140320323577728 lib_graph.py:296] num_splits 2
+2 (?, ?, ?, 0)
+INFO:tensorflow:num_splits 1
+I1009 01:03:15.963200 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:num_splits 1
+I1009 01:03:16.015144 140320323577728 lib_graph.py:296] num_splits 1
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/util/dispatch.py:201: calling softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+W1009 01:03:16.058876 140320323577728 deprecation.py:506] From /usr/local/lib/python3.6/dist-packages/tensorflow/python/util/dispatch.py:201: calling softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/util/dispatch.py:201: calling log_softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+W1009 01:03:16.090604 140320323577728 deprecation.py:506] From /usr/local/lib/python3.6/dist-packages/tensorflow/python/util/dispatch.py:201: calling log_softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+WARNING:tensorflow:From /content/gdrive/My Drive/insight_project/string_quartets_gen/lib_graph.py:177: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.cast` instead.
+W1009 01:03:16.108379 140320323577728 deprecation.py:323] From /content/gdrive/My Drive/insight_project/string_quartets_gen/lib_graph.py:177: to_float (from tensorflow.python.ops.math_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.cast` instead.
+WARNING:tensorflow:From /usr/local/lib/python3.6/dist-packages/tensorflow/python/util/dispatch.py:201: calling reduce_sum_v1 (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+W1009 01:03:16.120190 140320323577728 deprecation.py:506] From /usr/local/lib/python3.6/dist-packages/tensorflow/python/util/dispatch.py:201: calling reduce_sum_v1 (from tensorflow.python.ops.math_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+INFO:tensorflow:model/conv0/weights:0_[3, 3, 8, 128]
+I1009 01:03:17.125493 140320323577728 lib_graph.py:119] model/conv0/weights:0_[3, 3, 8, 128]
+INFO:tensorflow:model/conv0/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.125780 140320323577728 lib_graph.py:119] model/conv0/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv0/beta:0_[128]
+I1009 01:03:17.125895 140320323577728 lib_graph.py:119] model/conv0/beta:0_[128]
+INFO:tensorflow:model/conv1/weights:0_[3, 3, 128, 128]
+I1009 01:03:17.125985 140320323577728 lib_graph.py:119] model/conv1/weights:0_[3, 3, 128, 128]
+INFO:tensorflow:model/conv1/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.126067 140320323577728 lib_graph.py:119] model/conv1/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv1/beta:0_[128]
+I1009 01:03:17.126152 140320323577728 lib_graph.py:119] model/conv1/beta:0_[128]
+INFO:tensorflow:model/conv2/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.126229 140320323577728 lib_graph.py:119] model/conv2/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv2/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.126306 140320323577728 lib_graph.py:119] model/conv2/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv2/separable_conv2d/bias:0_[128]
+I1009 01:03:17.126381 140320323577728 lib_graph.py:119] model/conv2/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv2/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.126457 140320323577728 lib_graph.py:119] model/conv2/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv2/beta:0_[128]
+I1009 01:03:17.126532 140320323577728 lib_graph.py:119] model/conv2/beta:0_[128]
+INFO:tensorflow:model/conv3/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.126606 140320323577728 lib_graph.py:119] model/conv3/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv3/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+I1009 01:03:17.126695 140320323577728 lib_graph.py:119] model/conv3/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+INFO:tensorflow:model/conv3/separable_conv2d/bias:0_[0]
+I1009 01:03:17.126774 140320323577728 lib_graph.py:119] model/conv3/separable_conv2d/bias:0_[0]
+INFO:tensorflow:model/conv3/split_3_0/kernel:0_[0, 64]
+I1009 01:03:17.126855 140320323577728 lib_graph.py:119] model/conv3/split_3_0/kernel:0_[0, 64]
+INFO:tensorflow:model/conv3/split_3_0/bias:0_[64]
+I1009 01:03:17.126930 140320323577728 lib_graph.py:119] model/conv3/split_3_0/bias:0_[64]
+INFO:tensorflow:model/conv3/split_3_1/kernel:0_[0, 64]
+I1009 01:03:17.127010 140320323577728 lib_graph.py:119] model/conv3/split_3_1/kernel:0_[0, 64]
+INFO:tensorflow:model/conv3/split_3_1/bias:0_[64]
+I1009 01:03:17.127088 140320323577728 lib_graph.py:119] model/conv3/split_3_1/bias:0_[64]
+INFO:tensorflow:model/conv3/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.127168 140320323577728 lib_graph.py:119] model/conv3/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv3/beta:0_[128]
+I1009 01:03:17.127243 140320323577728 lib_graph.py:119] model/conv3/beta:0_[128]
+INFO:tensorflow:model/conv4/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.127317 140320323577728 lib_graph.py:119] model/conv4/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv4/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.127393 140320323577728 lib_graph.py:119] model/conv4/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv4/separable_conv2d/bias:0_[128]
+I1009 01:03:17.127467 140320323577728 lib_graph.py:119] model/conv4/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv4/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.127562 140320323577728 lib_graph.py:119] model/conv4/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv4/beta:0_[128]
+I1009 01:03:17.127638 140320323577728 lib_graph.py:119] model/conv4/beta:0_[128]
+INFO:tensorflow:model/conv5/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.127727 140320323577728 lib_graph.py:119] model/conv5/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv5/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.127802 140320323577728 lib_graph.py:119] model/conv5/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv5/separable_conv2d/bias:0_[128]
+I1009 01:03:17.127881 140320323577728 lib_graph.py:119] model/conv5/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv5/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.127955 140320323577728 lib_graph.py:119] model/conv5/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv5/beta:0_[128]
+I1009 01:03:17.128029 140320323577728 lib_graph.py:119] model/conv5/beta:0_[128]
+INFO:tensorflow:model/conv6/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.128104 140320323577728 lib_graph.py:119] model/conv6/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv6/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+I1009 01:03:17.128190 140320323577728 lib_graph.py:119] model/conv6/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+INFO:tensorflow:model/conv6/separable_conv2d/bias:0_[0]
+I1009 01:03:17.128265 140320323577728 lib_graph.py:119] model/conv6/separable_conv2d/bias:0_[0]
+INFO:tensorflow:model/conv6/split_6_0/kernel:0_[0, 64]
+I1009 01:03:17.128341 140320323577728 lib_graph.py:119] model/conv6/split_6_0/kernel:0_[0, 64]
+INFO:tensorflow:model/conv6/split_6_0/bias:0_[64]
+I1009 01:03:17.128414 140320323577728 lib_graph.py:119] model/conv6/split_6_0/bias:0_[64]
+INFO:tensorflow:model/conv6/split_6_1/kernel:0_[0, 64]
+I1009 01:03:17.128491 140320323577728 lib_graph.py:119] model/conv6/split_6_1/kernel:0_[0, 64]
+INFO:tensorflow:model/conv6/split_6_1/bias:0_[64]
+I1009 01:03:17.128568 140320323577728 lib_graph.py:119] model/conv6/split_6_1/bias:0_[64]
+INFO:tensorflow:model/conv6/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.128642 140320323577728 lib_graph.py:119] model/conv6/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv6/beta:0_[128]
+I1009 01:03:17.128735 140320323577728 lib_graph.py:119] model/conv6/beta:0_[128]
+INFO:tensorflow:model/conv7/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+I1009 01:03:17.128811 140320323577728 lib_graph.py:119] model/conv7/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+INFO:tensorflow:model/conv7/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.128890 140320323577728 lib_graph.py:119] model/conv7/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv7/separable_conv2d/bias:0_[128]
+I1009 01:03:17.128970 140320323577728 lib_graph.py:119] model/conv7/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv7/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.129049 140320323577728 lib_graph.py:119] model/conv7/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv7/beta:0_[128]
+I1009 01:03:17.129129 140320323577728 lib_graph.py:119] model/conv7/beta:0_[128]
+INFO:tensorflow:model/conv8/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+I1009 01:03:17.129210 140320323577728 lib_graph.py:119] model/conv8/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+INFO:tensorflow:model/conv8/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 4]
+I1009 01:03:17.129293 140320323577728 lib_graph.py:119] model/conv8/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 4]
+INFO:tensorflow:model/conv8/separable_conv2d/bias:0_[4]
+I1009 01:03:17.129367 140320323577728 lib_graph.py:119] model/conv8/separable_conv2d/bias:0_[4]
+INFO:tensorflow:model/conv8/gamma:0_[1, 1, 1, 4]
+I1009 01:03:17.129441 140320323577728 lib_graph.py:119] model/conv8/gamma:0_[1, 1, 1, 4]
+INFO:tensorflow:model/conv8/beta:0_[4]
+I1009 01:03:17.129515 140320323577728 lib_graph.py:119] model/conv8/beta:0_[4]
+INFO:tensorflow:model_type=dilated, input_depth=8, output_depth=4
+I1009 01:03:17.133644 140320323577728 lib_hparams.py:302] model_type=dilated, input_depth=8, output_depth=4
+INFO:tensorflow:layer_dilation_rates [1, 1]
+I1009 01:03:17.133900 140320323577728 lib_hparams.py:347] layer_dilation_rates [1, 1]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.134026 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [2, 2]
+I1009 01:03:17.134127 140320323577728 lib_hparams.py:347] layer_dilation_rates [2, 2]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.134214 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [4, 4]
+I1009 01:03:17.134302 140320323577728 lib_hparams.py:347] layer_dilation_rates [4, 4]
+INFO:tensorflow:num_split 2
+I1009 01:03:17.134380 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:layer_dilation_rates [8, 8]
+I1009 01:03:17.134455 140320323577728 lib_hparams.py:347] layer_dilation_rates [8, 8]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.134529 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [16, 16]
+I1009 01:03:17.134603 140320323577728 lib_hparams.py:347] layer_dilation_rates [16, 16]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.134691 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [32, 32]
+I1009 01:03:17.134768 140320323577728 lib_hparams.py:347] layer_dilation_rates [32, 32]
+INFO:tensorflow:num_split 2
+I1009 01:03:17.134848 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:num_layers=9, num_filters=128
+I1009 01:03:17.134926 140320323577728 lib_hparams.py:361] num_layers=9, num_filters=128
+INFO:tensorflow:num_splits 1
+I1009 01:03:17.157748 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:num_splits 2
+I1009 01:03:17.206001 140320323577728 lib_graph.py:296] num_splits 2
+2 (?, ?, ?, 0)
+INFO:tensorflow:num_splits 1
+I1009 01:03:17.282058 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:num_splits 1
+I1009 01:03:17.331161 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:num_splits 2
+I1009 01:03:17.379527 140320323577728 lib_graph.py:296] num_splits 2
+2 (?, ?, ?, 0)
+INFO:tensorflow:num_splits 1
+I1009 01:03:17.473037 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:num_splits 1
+I1009 01:03:17.498720 140320323577728 lib_graph.py:296] num_splits 1
+INFO:tensorflow:model/conv0/weights:0_[3, 3, 8, 128]
+I1009 01:03:17.584272 140320323577728 lib_graph.py:119] model/conv0/weights:0_[3, 3, 8, 128]
+INFO:tensorflow:model/conv0/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.584541 140320323577728 lib_graph.py:119] model/conv0/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv0/beta:0_[128]
+I1009 01:03:17.584650 140320323577728 lib_graph.py:119] model/conv0/beta:0_[128]
+INFO:tensorflow:model/conv1/weights:0_[3, 3, 128, 128]
+I1009 01:03:17.584753 140320323577728 lib_graph.py:119] model/conv1/weights:0_[3, 3, 128, 128]
+INFO:tensorflow:model/conv1/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.584844 140320323577728 lib_graph.py:119] model/conv1/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv1/beta:0_[128]
+I1009 01:03:17.584922 140320323577728 lib_graph.py:119] model/conv1/beta:0_[128]
+INFO:tensorflow:model/conv2/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.585002 140320323577728 lib_graph.py:119] model/conv2/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv2/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.585086 140320323577728 lib_graph.py:119] model/conv2/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv2/separable_conv2d/bias:0_[128]
+I1009 01:03:17.585163 140320323577728 lib_graph.py:119] model/conv2/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv2/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.585241 140320323577728 lib_graph.py:119] model/conv2/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv2/beta:0_[128]
+I1009 01:03:17.585319 140320323577728 lib_graph.py:119] model/conv2/beta:0_[128]
+INFO:tensorflow:model/conv3/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.585393 140320323577728 lib_graph.py:119] model/conv3/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv3/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+I1009 01:03:17.585469 140320323577728 lib_graph.py:119] model/conv3/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+INFO:tensorflow:model/conv3/separable_conv2d/bias:0_[0]
+I1009 01:03:17.585542 140320323577728 lib_graph.py:119] model/conv3/separable_conv2d/bias:0_[0]
+INFO:tensorflow:model/conv3/split_3_0/kernel:0_[0, 64]
+I1009 01:03:17.585612 140320323577728 lib_graph.py:119] model/conv3/split_3_0/kernel:0_[0, 64]
+INFO:tensorflow:model/conv3/split_3_0/bias:0_[64]
+I1009 01:03:17.585701 140320323577728 lib_graph.py:119] model/conv3/split_3_0/bias:0_[64]
+INFO:tensorflow:model/conv3/split_3_1/kernel:0_[0, 64]
+I1009 01:03:17.585776 140320323577728 lib_graph.py:119] model/conv3/split_3_1/kernel:0_[0, 64]
+INFO:tensorflow:model/conv3/split_3_1/bias:0_[64]
+I1009 01:03:17.585848 140320323577728 lib_graph.py:119] model/conv3/split_3_1/bias:0_[64]
+INFO:tensorflow:model/conv3/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.585921 140320323577728 lib_graph.py:119] model/conv3/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv3/beta:0_[128]
+I1009 01:03:17.585995 140320323577728 lib_graph.py:119] model/conv3/beta:0_[128]
+INFO:tensorflow:model/conv4/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.586074 140320323577728 lib_graph.py:119] model/conv4/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv4/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.586149 140320323577728 lib_graph.py:119] model/conv4/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv4/separable_conv2d/bias:0_[128]
+I1009 01:03:17.586224 140320323577728 lib_graph.py:119] model/conv4/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv4/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.586298 140320323577728 lib_graph.py:119] model/conv4/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv4/beta:0_[128]
+I1009 01:03:17.586370 140320323577728 lib_graph.py:119] model/conv4/beta:0_[128]
+INFO:tensorflow:model/conv5/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.586445 140320323577728 lib_graph.py:119] model/conv5/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv5/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.586519 140320323577728 lib_graph.py:119] model/conv5/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv5/separable_conv2d/bias:0_[128]
+I1009 01:03:17.586593 140320323577728 lib_graph.py:119] model/conv5/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv5/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.586668 140320323577728 lib_graph.py:119] model/conv5/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv5/beta:0_[128]
+I1009 01:03:17.586755 140320323577728 lib_graph.py:119] model/conv5/beta:0_[128]
+INFO:tensorflow:model/conv6/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+I1009 01:03:17.586828 140320323577728 lib_graph.py:119] model/conv6/separable_conv2d/depthwise_kernel:0_[3, 3, 128, 1]
+INFO:tensorflow:model/conv6/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+I1009 01:03:17.586903 140320323577728 lib_graph.py:119] model/conv6/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 0]
+INFO:tensorflow:model/conv6/separable_conv2d/bias:0_[0]
+I1009 01:03:17.586977 140320323577728 lib_graph.py:119] model/conv6/separable_conv2d/bias:0_[0]
+INFO:tensorflow:model/conv6/split_6_0/kernel:0_[0, 64]
+I1009 01:03:17.587050 140320323577728 lib_graph.py:119] model/conv6/split_6_0/kernel:0_[0, 64]
+INFO:tensorflow:model/conv6/split_6_0/bias:0_[64]
+I1009 01:03:17.587134 140320323577728 lib_graph.py:119] model/conv6/split_6_0/bias:0_[64]
+INFO:tensorflow:model/conv6/split_6_1/kernel:0_[0, 64]
+I1009 01:03:17.587207 140320323577728 lib_graph.py:119] model/conv6/split_6_1/kernel:0_[0, 64]
+INFO:tensorflow:model/conv6/split_6_1/bias:0_[64]
+I1009 01:03:17.587279 140320323577728 lib_graph.py:119] model/conv6/split_6_1/bias:0_[64]
+INFO:tensorflow:model/conv6/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.587352 140320323577728 lib_graph.py:119] model/conv6/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv6/beta:0_[128]
+I1009 01:03:17.587426 140320323577728 lib_graph.py:119] model/conv6/beta:0_[128]
+INFO:tensorflow:model/conv7/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+I1009 01:03:17.587499 140320323577728 lib_graph.py:119] model/conv7/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+INFO:tensorflow:model/conv7/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+I1009 01:03:17.587573 140320323577728 lib_graph.py:119] model/conv7/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 128]
+INFO:tensorflow:model/conv7/separable_conv2d/bias:0_[128]
+I1009 01:03:17.587651 140320323577728 lib_graph.py:119] model/conv7/separable_conv2d/bias:0_[128]
+INFO:tensorflow:model/conv7/gamma:0_[1, 1, 1, 128]
+I1009 01:03:17.587737 140320323577728 lib_graph.py:119] model/conv7/gamma:0_[1, 1, 1, 128]
+INFO:tensorflow:model/conv7/beta:0_[128]
+I1009 01:03:17.587811 140320323577728 lib_graph.py:119] model/conv7/beta:0_[128]
+INFO:tensorflow:model/conv8/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+I1009 01:03:17.587884 140320323577728 lib_graph.py:119] model/conv8/separable_conv2d/depthwise_kernel:0_[2, 2, 128, 1]
+INFO:tensorflow:model/conv8/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 4]
+I1009 01:03:17.587958 140320323577728 lib_graph.py:119] model/conv8/separable_conv2d/pointwise_kernel:0_[1, 1, 128, 4]
+INFO:tensorflow:model/conv8/separable_conv2d/bias:0_[4]
+I1009 01:03:17.588032 140320323577728 lib_graph.py:119] model/conv8/separable_conv2d/bias:0_[4]
+INFO:tensorflow:model/conv8/gamma:0_[1, 1, 1, 4]
+I1009 01:03:17.588112 140320323577728 lib_graph.py:119] model/conv8/gamma:0_[1, 1, 1, 4]
+INFO:tensorflow:model/conv8/beta:0_[4]
+I1009 01:03:17.588186 140320323577728 lib_graph.py:119] model/conv8/beta:0_[4]
+INFO:tensorflow:model_type=dilated, input_depth=8, output_depth=4
+I1009 01:03:17.588414 140320323577728 lib_hparams.py:302] model_type=dilated, input_depth=8, output_depth=4
+INFO:tensorflow:layer_dilation_rates [1, 1]
+I1009 01:03:17.588566 140320323577728 lib_hparams.py:347] layer_dilation_rates [1, 1]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.588664 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [2, 2]
+I1009 01:03:17.588764 140320323577728 lib_hparams.py:347] layer_dilation_rates [2, 2]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.588848 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [4, 4]
+I1009 01:03:17.588927 140320323577728 lib_hparams.py:347] layer_dilation_rates [4, 4]
+INFO:tensorflow:num_split 2
+I1009 01:03:17.589002 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:layer_dilation_rates [8, 8]
+I1009 01:03:17.589084 140320323577728 lib_hparams.py:347] layer_dilation_rates [8, 8]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.589159 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [16, 16]
+I1009 01:03:17.589233 140320323577728 lib_hparams.py:347] layer_dilation_rates [16, 16]
+INFO:tensorflow:num_split 1
+I1009 01:03:17.589308 140320323577728 lib_hparams.py:352] num_split 1
+INFO:tensorflow:layer_dilation_rates [32, 32]
+I1009 01:03:17.589393 140320323577728 lib_hparams.py:347] layer_dilation_rates [32, 32]
+INFO:tensorflow:num_split 2
+I1009 01:03:17.589469 140320323577728 lib_hparams.py:352] num_split 2
+INFO:tensorflow:num_layers=9, num_filters=128
+I1009 01:03:17.589545 140320323577728 lib_hparams.py:361] num_layers=9, num_filters=128
+WARNING:tensorflow:From coconet_train.py:290: Supervisor.__init__ (from tensorflow.python.training.supervisor) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please switch to tf.train.MonitoredTrainingSession
+W1009 01:03:17.691584 140320323577728 deprecation.py:323] From coconet_train.py:290: Supervisor.__init__ (from tensorflow.python.training.supervisor) is deprecated and will be removed in a future version.
+Instructions for updating:
+Please switch to tf.train.MonitoredTrainingSession
+INFO:tensorflow:Running local_init_op.
+I1009 01:03:18.409796 140320323577728 session_manager.py:505] Running local_init_op.
+INFO:tensorflow:Done running local_init_op.
+I1009 01:03:18.434860 140320323577728 session_manager.py:508] Done running local_init_op.
+INFO:tensorflow:Starting standard services.
+I1009 01:03:19.988433 140320323577728 supervisor.py:737] Starting standard services.
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:03:19.993538 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Starting queue runners.
+I1009 01:03:19.994358 140320323577728 supervisor.py:743] Starting queue runners.
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:09:19.993842 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 0: loss (mask): 4.4512, loss (unmask): 6.1462, loss (total): 5.2702, log lr: -4.1589, time taken: 424.1640
+I1009 01:10:44.456706 140320323577728 coconet_train.py:228] train, epoch 0: loss (mask): 4.4512, loss (unmask): 6.1462, loss (total): 5.2702, log lr: -4.1589, time taken: 424.1640
+Estimating population statistics...
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:15:19.993848 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+average of pop mean/stdev errors: 0.00246961 0.0106102
+average of batch mean/stdev: -0.195133 1.53639
+WARNING:tensorflow:From coconet_train.py:156: Variable.load (from tensorflow.python.ops.variables) is deprecated and will be removed in a future version.
+Instructions for updating:
+Prefer Variable.assign which has equivalent behavior in 2.X.
+W1009 01:18:18.999779 140320323577728 deprecation.py:323] From coconet_train.py:156: Variable.load (from tensorflow.python.ops.variables) is deprecated and will be removed in a future version.
+Instructions for updating:
+Prefer Variable.assign which has equivalent behavior in 2.X.
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:valid, epoch 0: loss (mask): 3.9765, loss (unmask): 1.6111, loss (total): 2.8027, log lr: 0.0000, time taken: 37.5091
+I1009 01:19:05.913966 140320323577728 coconet_train.py:228] valid, epoch 0: loss (mask): 3.9765, loss (unmask): 1.6111, loss (total): 2.8027, log lr: 0.0000, time taken: 37.5091
+INFO:tensorflow:Previous best validation loss: inf.
+I1009 01:19:05.914816 140320323577728 coconet_train.py:336] Previous best validation loss: inf.
+INFO:tensorflow:Storing best model so far with loss 2.8027 at ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/best_model.ckpt.
+I1009 01:19:06.329220 140320323577728 coconet_train.py:340] Storing best model so far with loss 2.8027 at ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/best_model.ckpt.
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:21:19.993779 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 1: loss (mask): 3.3746, loss (unmask): 0.7636, loss (total): 2.0797, log lr: -4.1589, time taken: 419.8020
+I1009 01:26:23.928196 140320323577728 coconet_train.py:228] train, epoch 1: loss (mask): 3.3746, loss (unmask): 0.7636, loss (total): 2.0797, log lr: -4.1589, time taken: 419.8020
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:27:19.993721 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:33:19.993871 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 2: loss (mask): 3.1650, loss (unmask): 0.9196, loss (total): 2.0438, log lr: -4.1589, time taken: 419.3420
+I1009 01:33:40.945709 140320323577728 coconet_train.py:228] train, epoch 2: loss (mask): 3.1650, loss (unmask): 0.9196, loss (total): 2.0438, log lr: -4.1589, time taken: 419.3420
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:39:19.993782 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 3: loss (mask): 3.2739, loss (unmask): 1.5187, loss (total): 2.4226, log lr: -4.1589, time taken: 419.1039
+I1009 01:40:57.714344 140320323577728 coconet_train.py:228] train, epoch 3: loss (mask): 3.2739, loss (unmask): 1.5187, loss (total): 2.4226, log lr: -4.1589, time taken: 419.1039
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:45:19.993844 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 4: loss (mask): 3.1450, loss (unmask): 1.1514, loss (total): 2.1517, log lr: -4.1589, time taken: 419.5747
+I1009 01:48:14.961520 140320323577728 coconet_train.py:228] train, epoch 4: loss (mask): 3.1450, loss (unmask): 1.1514, loss (total): 2.1517, log lr: -4.1589, time taken: 419.5747
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:51:19.993777 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 5: loss (mask): 3.0546, loss (unmask): 1.1898, loss (total): 2.1230, log lr: -4.1589, time taken: 418.8540
+I1009 01:55:31.353901 140320323577728 coconet_train.py:228] train, epoch 5: loss (mask): 3.0546, loss (unmask): 1.1898, loss (total): 2.1230, log lr: -4.1589, time taken: 418.8540
+Estimating population statistics...
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 01:57:19.993723 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+average of pop mean/stdev errors: 0.00453693 0.0074805
+average of batch mean/stdev: -0.501392 10.4306
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:03:19.993713 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:valid, epoch 5: loss (mask): 2.8829, loss (unmask): 0.5095, loss (total): 1.7093, log lr: 0.0000, time taken: 37.5844
+I1009 02:03:52.233883 140320323577728 coconet_train.py:228] valid, epoch 5: loss (mask): 2.8829, loss (unmask): 0.5095, loss (total): 1.7093, log lr: 0.0000, time taken: 37.5844
+INFO:tensorflow:Previous best validation loss: 2.8027.
+I1009 02:03:52.234782 140320323577728 coconet_train.py:336] Previous best validation loss: 2.8027.
+INFO:tensorflow:Storing best model so far with loss 1.7093 at ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/best_model.ckpt.
+I1009 02:03:52.612455 140320323577728 coconet_train.py:340] Storing best model so far with loss 1.7093 at ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/best_model.ckpt.
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:09:19.994719 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 6: loss (mask): 2.9043, loss (unmask): 0.8523, loss (total): 1.9039, log lr: -4.1589, time taken: 422.3937
+I1009 02:11:12.706079 140320323577728 coconet_train.py:228] train, epoch 6: loss (mask): 2.9043, loss (unmask): 0.8523, loss (total): 1.9039, log lr: -4.1589, time taken: 422.3937
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:15:19.994267 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 7: loss (mask): 2.8170, loss (unmask): 0.7087, loss (total): 1.7552, log lr: -4.1589, time taken: 425.6010
+I1009 02:18:36.962411 140320323577728 coconet_train.py:228] train, epoch 7: loss (mask): 2.8170, loss (unmask): 0.7087, loss (total): 1.7552, log lr: -4.1589, time taken: 425.6010
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:21:19.996201 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 8: loss (mask): 2.7319, loss (unmask): 0.5583, loss (total): 1.6415, log lr: -4.1589, time taken: 423.8255
+I1009 02:25:59.001964 140320323577728 coconet_train.py:228] train, epoch 8: loss (mask): 2.7319, loss (unmask): 0.5583, loss (total): 1.6415, log lr: -4.1589, time taken: 423.8255
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:27:19.994501 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 9: loss (mask): 2.8733, loss (unmask): 1.1093, loss (total): 1.9837, log lr: -4.1589, time taken: 422.3481
+I1009 02:33:19.527645 140320323577728 coconet_train.py:228] train, epoch 9: loss (mask): 2.8733, loss (unmask): 1.1093, loss (total): 1.9837, log lr: -4.1589, time taken: 422.3481
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:33:19.998852 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:39:19.994264 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 10: loss (mask): 2.8836, loss (unmask): 0.8048, loss (total): 1.8632, log lr: -4.1589, time taken: 421.2570
+I1009 02:40:39.102294 140320323577728 coconet_train.py:228] train, epoch 10: loss (mask): 2.8836, loss (unmask): 0.8048, loss (total): 1.8632, log lr: -4.1589, time taken: 421.2570
+Estimating population statistics...
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:45:19.993796 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+average of pop mean/stdev errors: 0.0215369 0.0354741
+average of batch mean/stdev: -1.78538 23.3043
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:valid, epoch 10: loss (mask): 2.8731, loss (unmask): 0.7395, loss (total): 1.8181, log lr: 0.0000, time taken: 37.4251
+I1009 02:49:01.882805 140320323577728 coconet_train.py:228] valid, epoch 10: loss (mask): 2.8731, loss (unmask): 0.7395, loss (total): 1.8181, log lr: 0.0000, time taken: 37.4251
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:51:19.994275 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 11: loss (mask): 3.0044, loss (unmask): 1.1251, loss (total): 2.0803, log lr: -4.1589, time taken: 422.2439
+I1009 02:56:21.789026 140320323577728 coconet_train.py:228] train, epoch 11: loss (mask): 3.0044, loss (unmask): 1.1251, loss (total): 2.0803, log lr: -4.1589, time taken: 422.2439
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 02:57:19.993936 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:03:19.994064 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 12: loss (mask): 2.9316, loss (unmask): 0.9149, loss (total): 1.9300, log lr: -4.1589, time taken: 421.7809
+I1009 03:03:41.651649 140320323577728 coconet_train.py:228] train, epoch 12: loss (mask): 2.9316, loss (unmask): 0.9149, loss (total): 1.9300, log lr: -4.1589, time taken: 421.7809
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:09:19.994150 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 13: loss (mask): 2.9229, loss (unmask): 1.0834, loss (total): 1.9936, log lr: -4.1589, time taken: 425.5318
+I1009 03:11:04.932210 140320323577728 coconet_train.py:228] train, epoch 13: loss (mask): 2.9229, loss (unmask): 1.0834, loss (total): 1.9936, log lr: -4.1589, time taken: 425.5318
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:15:19.994141 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 14: loss (mask): 2.7842, loss (unmask): 0.7771, loss (total): 1.8020, log lr: -4.1589, time taken: 424.9068
+I1009 03:18:27.595898 140320323577728 coconet_train.py:228] train, epoch 14: loss (mask): 2.7842, loss (unmask): 0.7771, loss (total): 1.8020, log lr: -4.1589, time taken: 424.9068
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:21:19.994299 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 15: loss (mask): 3.2505, loss (unmask): 2.2720, loss (total): 2.7642, log lr: -4.1589, time taken: 425.3118
+I1009 03:25:50.687182 140320323577728 coconet_train.py:228] train, epoch 15: loss (mask): 3.2505, loss (unmask): 2.2720, loss (total): 2.7642, log lr: -4.1589, time taken: 425.3118
+Estimating population statistics...
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:27:19.994212 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:33:19.993785 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+average of pop mean/stdev errors: 0.0425231 0.0644761
+average of batch mean/stdev: -3.40259 51.6611
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:valid, epoch 15: loss (mask): 3.5784, loss (unmask): 3.5488, loss (total): 3.5705, log lr: 0.0000, time taken: 37.9957
+I1009 03:34:21.950314 140320323577728 coconet_train.py:228] valid, epoch 15: loss (mask): 3.5784, loss (unmask): 3.5488, loss (total): 3.5705, log lr: 0.0000, time taken: 37.9957
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:39:19.994356 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 16: loss (mask): 3.2981, loss (unmask): 3.3368, loss (total): 3.3172, log lr: -4.1589, time taken: 429.1911
+I1009 03:41:49.322081 140320323577728 coconet_train.py:228] train, epoch 16: loss (mask): 3.2981, loss (unmask): 3.3368, loss (total): 3.3172, log lr: -4.1589, time taken: 429.1911
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:45:19.994073 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 17: loss (mask): 3.3203, loss (unmask): 3.2162, loss (total): 3.2669, log lr: -4.1589, time taken: 431.0968
+I1009 03:49:18.433234 140320323577728 coconet_train.py:228] train, epoch 17: loss (mask): 3.3203, loss (unmask): 3.2162, loss (total): 3.2669, log lr: -4.1589, time taken: 431.0968
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:51:19.994155 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 18: loss (mask): 3.0763, loss (unmask): 1.6735, loss (total): 2.3750, log lr: -4.1589, time taken: 428.6558
+I1009 03:56:45.150553 140320323577728 coconet_train.py:228] train, epoch 18: loss (mask): 3.0763, loss (unmask): 1.6735, loss (total): 2.3750, log lr: -4.1589, time taken: 428.6558
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 03:57:19.993983 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:03:19.993794 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 19: loss (mask): 3.1063, loss (unmask): 1.7242, loss (total): 2.4267, log lr: -4.1589, time taken: 429.2401
+I1009 04:04:12.467389 140320323577728 coconet_train.py:228] train, epoch 19: loss (mask): 3.1063, loss (unmask): 1.7242, loss (total): 2.4267, log lr: -4.1589, time taken: 429.2401
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:09:19.994274 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 20: loss (mask): 2.9096, loss (unmask): 1.2035, loss (total): 2.0571, log lr: -4.1589, time taken: 428.4786
+I1009 04:11:38.855543 140320323577728 coconet_train.py:228] train, epoch 20: loss (mask): 2.9096, loss (unmask): 1.2035, loss (total): 2.0571, log lr: -4.1589, time taken: 428.4786
+Estimating population statistics...
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:15:19.994214 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+average of pop mean/stdev errors: 0.0358526 0.0515836
+average of batch mean/stdev: -10.0118 71.1486
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:valid, epoch 20: loss (mask): 2.6913, loss (unmask): 0.8221, loss (total): 1.7648, log lr: 0.0000, time taken: 37.8369
+I1009 04:20:12.038643 140320323577728 coconet_train.py:228] valid, epoch 20: loss (mask): 2.6913, loss (unmask): 0.8221, loss (total): 1.7648, log lr: 0.0000, time taken: 37.8369
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:21:19.994144 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:27:19.994225 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 21: loss (mask): 2.7840, loss (unmask): 1.0790, loss (total): 1.9501, log lr: -4.1589, time taken: 430.8039
+I1009 04:27:40.831434 140320323577728 coconet_train.py:228] train, epoch 21: loss (mask): 2.7840, loss (unmask): 1.0790, loss (total): 1.9501, log lr: -4.1589, time taken: 430.8039
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:33:19.994172 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 22: loss (mask): 2.8724, loss (unmask): 1.0823, loss (total): 1.9689, log lr: -4.1589, time taken: 430.7222
+I1009 04:35:09.423429 140320323577728 coconet_train.py:228] train, epoch 22: loss (mask): 2.8724, loss (unmask): 1.0823, loss (total): 1.9689, log lr: -4.1589, time taken: 430.7222
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:39:19.994117 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 23: loss (mask): 2.6968, loss (unmask): 0.8382, loss (total): 1.7679, log lr: -4.1589, time taken: 433.7148
+I1009 04:42:41.169672 140320323577728 coconet_train.py:228] train, epoch 23: loss (mask): 2.6968, loss (unmask): 0.8382, loss (total): 1.7679, log lr: -4.1589, time taken: 433.7148
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:45:19.994300 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 24: loss (mask): 2.8355, loss (unmask): 1.1015, loss (total): 1.9936, log lr: -4.1589, time taken: 429.9138
+I1009 04:50:09.154193 140320323577728 coconet_train.py:228] train, epoch 24: loss (mask): 2.8355, loss (unmask): 1.1015, loss (total): 1.9936, log lr: -4.1589, time taken: 429.9138
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:51:19.994411 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 04:57:19.993842 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 25: loss (mask): 2.7387, loss (unmask): 0.8094, loss (total): 1.7742, log lr: -4.1589, time taken: 429.5110
+I1009 04:57:36.937121 140320323577728 coconet_train.py:228] train, epoch 25: loss (mask): 2.7387, loss (unmask): 0.8094, loss (total): 1.7742, log lr: -4.1589, time taken: 429.5110
+Estimating population statistics...
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 05:03:19.993787 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+average of pop mean/stdev errors: 0.0283664 0.0559171
+average of batch mean/stdev: -6.27655 87.0903
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:valid, epoch 25: loss (mask): 2.6136, loss (unmask): 0.6045, loss (total): 1.6161, log lr: 0.0000, time taken: 38.5949
+I1009 05:06:13.492059 140320323577728 coconet_train.py:228] valid, epoch 25: loss (mask): 2.6136, loss (unmask): 0.6045, loss (total): 1.6161, log lr: 0.0000, time taken: 38.5949
+INFO:tensorflow:Previous best validation loss: 1.7093.
+I1009 05:06:13.492446 140320323577728 coconet_train.py:336] Previous best validation loss: 1.7093.
+INFO:tensorflow:Storing best model so far with loss 1.6161 at ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/best_model.ckpt.
+I1009 05:06:13.909333 140320323577728 coconet_train.py:340] Storing best model so far with loss 1.6161 at ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/best_model.ckpt.
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 05:09:19.994525 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 26: loss (mask): 2.7738, loss (unmask): 1.3344, loss (total): 2.0500, log lr: -4.1589, time taken: 430.1877
+I1009 05:13:42.466093 140320323577728 coconet_train.py:228] train, epoch 26: loss (mask): 2.7738, loss (unmask): 1.3344, loss (total): 2.0500, log lr: -4.1589, time taken: 430.1877
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 05:15:19.994037 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 27: loss (mask): 2.8367, loss (unmask): 1.4402, loss (total): 2.1480, log lr: -4.1589, time taken: 429.7105
+I1009 05:21:10.441034 140320323577728 coconet_train.py:228] train, epoch 27: loss (mask): 2.8367, loss (unmask): 1.4402, loss (total): 2.1480, log lr: -4.1589, time taken: 429.7105
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 05:21:19.996501 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 05:27:19.994285 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 28: loss (mask): 2.9931, loss (unmask): 1.7184, loss (total): 2.3605, log lr: -4.1589, time taken: 431.2368
+I1009 05:28:40.035651 140320323577728 coconet_train.py:228] train, epoch 28: loss (mask): 2.9931, loss (unmask): 1.7184, loss (total): 2.3605, log lr: -4.1589, time taken: 431.2368
+!!!!!Running epoch!!!!!!
+INFO:tensorflow:Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+I1009 05:33:19.994299 140318496581376 supervisor.py:1117] Saving checkpoint to path ./logs/dilated-9-128_bs=10,corrupt=0.5,len=64,lr=0.015625,mm=orderless,nreg_conv=2,num_i=4,n_pch=46,mask_only=False,quant=0.125,rescale=True,depth_mul=1,sep=True,res=True,sconv=True,soft=True/model.ckpt
+INFO:tensorflow:train, epoch 29: loss (mask): 2.7040, loss (unmask): 0.7849, loss (total): 1.7425, log lr: -4.1589, time taken: 428.4905
+I1009 05:36:06.482247 140320323577728 coconet_train.py:228] train, epoch 29: loss (mask): 2.7040, loss (unmask): 0.7849, loss (total): 1.7425, log lr: -4.1589, time taken: 428.4905
+best validation loss 1.616070321977955
+Done.
+1.616070321977955
